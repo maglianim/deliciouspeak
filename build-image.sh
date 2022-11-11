@@ -1,1 +1,1 @@
-docker image build -t flask_docker .
+docker image build -t deliciouspeak .

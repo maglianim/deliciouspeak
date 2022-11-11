@@ -3,17 +3,15 @@
 # Licensed under the MIT License. See LICENSE in the project root for license information.
 #-----------------------------------------------------------------------------------------
 '''
-sdsfdsf
+Main file
 '''
-from flask import Flask
 import os
+from flask import Flask
+from api import api_blueprint
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return 'hello worlss2'
-
+app.register_blueprint(api_blueprint, url_prefix="/api")
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
