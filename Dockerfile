@@ -11,9 +11,9 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 
 # copy every content from the local file to the image
-COPY . /app
+COPY ./app /app
 
 # configure the container to run in an executed manner
 ENTRYPOINT [ "python" ]
 
-CMD ["app.py" ]
+CMD ["/app/app.py" ]

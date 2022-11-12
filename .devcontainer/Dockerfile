@@ -30,3 +30,9 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
 
 RUN apt-get update && apt-get install bash-completion
+
+# Java dependency used to launch open API generator tool
+RUN sudo apt install -y default-jre
+
+# Open API generator tool
+RUN npm install -g @openapitools/openapi-generator-cli
