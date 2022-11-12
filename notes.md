@@ -16,6 +16,9 @@ https://www.imaginarycloud.com/blog/flask-python/
 https://realpython.com/flask-blueprint/#how-flask-blueprints-work
 
 
+- secure app with jwt
+https://geekflare.com/securing-flask-api-with-jwt/
+
 
 -- note - todo
 - versionare le api
@@ -25,3 +28,8 @@ https://realpython.com/flask-blueprint/#how-flask-blueprints-work
 - scaricato dev container python per vs code https://github.com/microsoft/vscode-remote-try-python
 - studio open api
 - open api - adottato approcio design first (https://oai.github.io/Documentation/best-practices.html)
+
+
+
+https://www.section.io/engineering-education/implementing-totp-2fa-using-flask/
+
