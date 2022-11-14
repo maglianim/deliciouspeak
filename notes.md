@@ -33,3 +33,8 @@ https://geekflare.com/securing-flask-api-with-jwt/
 
 https://www.section.io/engineering-education/implementing-totp-2fa-using-flask/
 
+
+
+styleguide
+
+https://google.github.io/styleguide/pyguide.html#3164-guidelines-derived-from-guidos-recommendations
