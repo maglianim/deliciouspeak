@@ -4,10 +4,12 @@
 import connexion
 
 from api import encoder
-from api.biz.core.DbService import DbService
 from api.biz.utils import jwt
 
 def decode_token(token):
+    """
+    main entry point for the decode token utility function
+    """
     return jwt.decode_token(token)
 
 
@@ -22,7 +24,7 @@ def main():
                 base_path='/api',
                 pythonic_params=True)
 
-    DbService()
+    # DbService()
     app.run(port=5000, debug=True)
 
 if __name__ == '__main__':

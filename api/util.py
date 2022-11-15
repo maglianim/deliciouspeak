@@ -1,7 +1,9 @@
+"""
+Auto generated from openapi-generator-cli tool
+"""
 import datetime
 
 import six
-import typing
 from api import typing_utils
 
 

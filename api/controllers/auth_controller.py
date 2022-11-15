@@ -1,6 +1,8 @@
 """
+    Auto generated from openapi-generator-cli tool
     Auth controller - TODO
 """
+
 from http import HTTPStatus
 import connexion
 from api.biz.core.models.exceptions import *
@@ -85,6 +87,6 @@ def user_register(register_user_payload=None):  # noqa: E501
             return None, HTTPStatus.CREATED
         except ResourceExistingException:
             return None, HTTPStatus.CONFLICT
-        except Exception:
+        except InvalidUserException:
             return None, HTTPStatus.BAD_REQUEST
     return None, HTTPStatus.BAD_REQUEST

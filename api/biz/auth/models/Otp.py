@@ -4,7 +4,7 @@ from datetime import date
 
 class Otp(BaseEntity):
     """
-    Domain class of user
+    Domain class of Otp entry
     """
     __tablename__ = 'Otp_entries'
 

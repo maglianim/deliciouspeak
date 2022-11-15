@@ -1,4 +1,5 @@
 import math, random
+from sqlalchemy import delete, select
 from api.biz.user.models.User import User
 from api.biz.auth.models.Otp import Otp
 from api.biz.core.BaseService import BaseService
@@ -6,7 +7,7 @@ from api.biz.core.MailService import MailService
 from api.biz.user.services.UserService import UserService
 from api.biz.utils.utility_functions import *
 from api.biz.utils import jwt
-from sqlalchemy import delete, select
+
 class AuthService(BaseService):
     def __init__(self) -> None:
         super(AuthService, self).__init__()
@@ -35,6 +36,9 @@ class AuthService(BaseService):
 
 
     def login2fa(self, user_name: str, otp: str) -> str:
+        """
+        performs 2fa login, validating the given otp
+        """
         if not user_name or not otp:
             return None
         try:

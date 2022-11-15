@@ -1,3 +1,7 @@
+"""
+Auto generated from openapi-generator-cli tool
+"""
+
 from connexion.apps.flask_app import FlaskJSONEncoder
 import six
 

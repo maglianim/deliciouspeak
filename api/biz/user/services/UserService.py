@@ -1,3 +1,7 @@
+"""
+Business logic for the user entity
+"""
+
 from api.biz.user.models.User import User
 from api.biz.core.BaseService import BaseService
 from sqlalchemy import select
@@ -8,7 +12,6 @@ PWD_MIN_ACCEPTED_LENGTH = 8
 class UserService(BaseService):
     def __init__(self) -> None:
         super(UserService, self).__init__()
- 
 
     def create(self, user: User) -> bool:
         """
@@ -30,6 +33,9 @@ class UserService(BaseService):
         
 
     def get_by_email_address(self, email_address: str) -> User:
+        """
+        select the user from the db by its email address
+        """
         try:
             session = self._get_session()
             statement = select(User).filter_by(email_address=email_address)
@@ -42,7 +48,11 @@ class UserService(BaseService):
 
     def __validateUser(self, user: User):
         """
-        Validates the user. as example purpose it only checks if password is provided and has a minimum length.
+        Validates the user. as example purpose it only checks if
+        - email_address is provided
+        - password is provided and has a minimum length.
         """
+        if not user.email_address:
+            raise InvalidUserException('Invalid password')
         if not user.password or len(user.password) < PWD_MIN_ACCEPTED_LENGTH:
-            raise Exception('Invalid password')
+            raise InvalidUserException('Invalid password')

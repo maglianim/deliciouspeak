@@ -1,5 +1,9 @@
 # coding: utf-8
 
+"""
+Auto generated from openapi-generator-cli tool
+"""
+
 import sys
 
 if sys.version_info < (3, 7):
