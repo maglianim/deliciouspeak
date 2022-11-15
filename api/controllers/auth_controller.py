@@ -1,17 +1,17 @@
+"""
+    Auth controller - TODO
+"""
+from http import HTTPStatus
 import connexion
-import six
-from typing import Dict
-from typing import Tuple
-from typing import Union
-
+from api.biz.core.models.exceptions import *
+from api.biz.auth.services.AuthService import AuthService
+from api.biz.user.services.UserService import UserService
 from api.models.auth_login200_response import AuthLogin200Response  # noqa: E501
-from api.models.login2fa_payload import Login2faPayload  # noqa: E501
+from api.models import mappers
 from api.models.login_payload import LoginPayload  # noqa: E501
 from api.models.login_success_resp import LoginSuccessResp  # noqa: E501
+from api.models.login2fa_payload import Login2faPayload  # noqa: E501
 from api.models.register_user_payload import RegisterUserPayload  # noqa: E501
-from api.biz.user.services.UserService import UserService
-from api import util
-from api.models import mappers
 
 
 def auth_login(login_payload=None):  # noqa: E501
@@ -26,7 +26,14 @@ def auth_login(login_payload=None):  # noqa: E501
     """
     if connexion.request.is_json:
         login_payload = LoginPayload.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+        service = AuthService()
+        login_result = service.login(login_payload.username, login_payload.password)
+        print(login_result)
+        if not login_result[0]:
+            return None, HTTPStatus.UNAUTHORIZED
+        if not login_result[1]:
+            return None, HTTPStatus.OK        
+        return AuthLogin200Response(token = login_result[1]), HTTPStatus.OK
 
 
 def auth_login2fa_post(login2fa_payload=None):  # noqa: E501
@@ -56,6 +63,11 @@ def user_register(register_user_payload=None):  # noqa: E501
     """
     if connexion.request.is_json:
         register_user_payload = RegisterUserPayload.from_dict(connexion.request.get_json())  # noqa: E501
-        user_service = UserService()
-        user_service.create(mappers.from_register_userpayload_to_user(register_user_payload))
-    return 'do some magic!'
+        try:
+            user_service = UserService()
+            user_service.create(mappers.from_register_userpayload_to_user(register_user_payload))
+            return None, HTTPStatus.CREATED
+        except ResourceExistingException:
+            return None, HTTPStatus.CONFLICT
+        except Exception:
+            return None, HTTPStatus.BAD_REQUEST

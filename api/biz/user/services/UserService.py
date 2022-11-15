@@ -1,41 +1,44 @@
 from api.biz.user.models.User import User
-from api.biz.core.DbService import DbService
+from api.biz.core.BaseService import BaseService
 from sqlalchemy import select
-
+from  api.biz.core.models.exceptions import *
+from api.biz.utils.utility_functions import *
 PWD_MIN_ACCEPTED_LENGTH = 8
 
-class UserService(object):
+class UserService(BaseService):
     def __init__(self) -> None:
-        self.__db_service = DbService()
-        
+        super(UserService, self).__init__()
+ 
 
-    def create(self, user: User) -> int:
+    def create(self, user: User) -> bool:
         """
         creates a new user
         """
 
         self.__validateUser(user)
         try:
-            session = self.__db_service.get_session()
-            existingUser = self.get_by_email_address(user.email_address)
-            if (existingUser):
-                raise Exception('User already exists')
+            session = self._get_session()
+            existing_user = self.get_by_email_address(user.email_address)
+            if existing_user:
+                raise ResourceExistingException('User already exists')
+            user.password = encode_password(user.password)
             session.add(user)
             session.commit()
+            return True
         finally:
             session.close()
-        return 0
+        
 
     def get_by_email_address(self, email_address: str) -> User:
         try:
-            session = self.__db_service.get_session()
+            session = self._get_session()
             statement = select(User).filter_by(email_address=email_address)
             result = session.execute(statement).scalars().first()
             if isinstance(result, User):
                 return result
             return None
         finally:
-            session.close()        
+            session.close()
 
     def __validateUser(self, user: User):
         """
