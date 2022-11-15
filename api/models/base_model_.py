@@ -1,3 +1,7 @@
+"""
+Auto generated from openapi-generator-cli tool
+"""
+
 import pprint
 
 import six
