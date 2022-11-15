@@ -1,1 +1,7 @@
 - todo
+- istruzione per lanciare ambiente (git clone e open dev container)
+- link a open api
+- istruzione per lanciare l'applicativo
+- istruzione per lanciare i test
+- istruzione per creare l'immagine
+- istruzione per lanciare i container
