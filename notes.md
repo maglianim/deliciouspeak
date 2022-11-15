@@ -18,7 +18,7 @@ https://realpython.com/flask-blueprint/#how-flask-blueprints-work
 
 - secure app with jwt
 https://geekflare.com/securing-flask-api-with-jwt/
-
+https://github.com/spec-first/connexion/blob/main/examples/openapi3/jwt/app.py
 
 -- note - todo
 - versionare le api

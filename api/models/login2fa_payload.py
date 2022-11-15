@@ -15,20 +15,25 @@ class Login2faPayload(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, otp=None):  # noqa: E501
+    def __init__(self, username=None, otp=None):  # noqa: E501
         """Login2faPayload - a model defined in OpenAPI
 
+        :param username: The username of this Login2faPayload.  # noqa: E501
+        :type username: str
         :param otp: The otp of this Login2faPayload.  # noqa: E501
         :type otp: str
         """
         self.openapi_types = {
+            'username': str,
             'otp': str
         }
 
         self.attribute_map = {
+            'username': 'username',
             'otp': 'otp'
         }
 
+        self._username = username
         self._otp = otp
 
     @classmethod
@@ -41,6 +46,29 @@ class Login2faPayload(Model):
         :rtype: Login2faPayload
         """
         return util.deserialize_model(dikt, cls)
+
+    @property
+    def username(self):
+        """Gets the username of this Login2faPayload.
+
+
+        :return: The username of this Login2faPayload.
+        :rtype: str
+        """
+        return self._username
+
+    @username.setter
+    def username(self, username):
+        """Sets the username of this Login2faPayload.
+
+
+        :param username: The username of this Login2faPayload.
+        :type username: str
+        """
+        if username is None:
+            raise ValueError("Invalid value for `username`, must not be `None`")  # noqa: E501
+
+        self._username = username
 
     @property
     def otp(self):

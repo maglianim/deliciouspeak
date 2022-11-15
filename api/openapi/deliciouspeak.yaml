@@ -90,6 +90,22 @@ paths:
       tags:
       - auth
       x-openapi-router-controller: api.controllers.auth_controller
+  /auth/private:
+    get:
+      summary: Gets a private info accessible only if user is logged in
+      operationId: auth_private
+      responses:
+        '200':
+          description: secret response
+          content:
+            'text/plain':
+              schema:
+                type: string
+      security:
+      - jwt: ['secret']  
+      tags:
+      - auth
+      x-openapi-router-controller: api.controllers.auth_controller
 components:
   schemas:
     RegisterUserPayload:
@@ -196,14 +212,20 @@ components:
     Login2faPayload:
       description: request payload for two-factor login process
       example:
-        otp: abcdefg
+        otp: 13456
+        username: john.smith@delicious.com
       properties:
+        username:
+          example: john.smith@delicious.com
+          title: username
+          type: string
         otp:
           description: one time password value
           example: abcdefg
           title: otp
           type: string
       required:
+      - username
       - otp
       title: Login2faPayload
       type: object
@@ -212,3 +234,9 @@ components:
       - $ref: '#/components/schemas/LoginSuccessResp'
       - $ref: '#/components/schemas/LoginSuccess2faResp'
       title: authLogin_200_response
+  securitySchemes:
+    jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: api.main.decode_token

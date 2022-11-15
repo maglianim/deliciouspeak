@@ -34,6 +34,7 @@ def auth_login(login_payload=None):  # noqa: E501
         if not login_result[1]:
             return None, HTTPStatus.OK        
         return AuthLogin200Response(token = login_result[1]), HTTPStatus.OK
+    return None, HTTPStatus.BAD_REQUEST
 
 
 def auth_login2fa_post(login2fa_payload=None):  # noqa: E501
@@ -48,7 +49,22 @@ def auth_login2fa_post(login2fa_payload=None):  # noqa: E501
     """
     if connexion.request.is_json:
         login2fa_payload = Login2faPayload.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+        service = AuthService()
+        login_token = service.login2fa(login2fa_payload.username, login2fa_payload.otp)
+        if not login_token:
+            return None, HTTPStatus.UNAUTHORIZED
+        return LoginSuccessResp(token = login_token), HTTPStatus.OK        
+    return None, HTTPStatus.BAD_REQUEST
+
+def auth_private():  # noqa: E501
+    """Gets a private info accessible only if user is logged in
+
+     # noqa: E501
+
+
+    :rtype: Union[str, Tuple[str, int], Tuple[str, int, Dict[str, str]]
+    """
+    return 'Pizza with ananas is evil!'
 
 
 def user_register(register_user_payload=None):  # noqa: E501
@@ -71,3 +87,4 @@ def user_register(register_user_payload=None):  # noqa: E501
             return None, HTTPStatus.CONFLICT
         except Exception:
             return None, HTTPStatus.BAD_REQUEST
+    return None, HTTPStatus.BAD_REQUEST
