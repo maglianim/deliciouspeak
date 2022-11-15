@@ -11,6 +11,7 @@ from api.models.login_success_resp import LoginSuccessResp  # noqa: E501
 from api.models.register_user_payload import RegisterUserPayload  # noqa: E501
 from api.biz.user.services.UserService import UserService
 from api import util
+from api.models import mappers
 
 
 def auth_login(login_payload=None):  # noqa: E501
@@ -56,5 +57,5 @@ def user_register(register_user_payload=None):  # noqa: E501
     if connexion.request.is_json:
         register_user_payload = RegisterUserPayload.from_dict(connexion.request.get_json())  # noqa: E501
         user_service = UserService()
-        user_service.create(register_user_payload)
+        user_service.create(mappers.from_register_userpayload_to_user(register_user_payload))
     return 'do some magic!'
