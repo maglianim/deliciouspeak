@@ -1,3 +1,5 @@
+from api.biz.utils.utility_functions import *
+
 class MailService:
     """
     implementatio of a dummy mail service
@@ -13,13 +15,15 @@ class MailService:
         should be provided
         """
 
-        print(f"""
+        message = f"""
             *********************************************************
             **************** FAKE MAIL SERVICE **********************
             recipient: {recipient}
             subject: {subject}
             body: {body}
             *********************************************************
-        """.format(recipient=recipient, subject=subject, body=body))
+        """.format(recipient=recipient, subject=subject, body=body)
+
+        print_to_stdout(message);
         
     

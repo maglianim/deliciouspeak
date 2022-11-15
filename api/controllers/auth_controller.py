@@ -30,7 +30,6 @@ def auth_login(login_payload=None):  # noqa: E501
         login_payload = LoginPayload.from_dict(connexion.request.get_json())  # noqa: E501
         service = AuthService()
         login_result = service.login(login_payload.username, login_payload.password)
-        print(login_result)
         if not login_result[0]:
             return None, HTTPStatus.UNAUTHORIZED
         if not login_result[1]:
