@@ -1,0 +1,260 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: info@deliciouspeak.com
+  description: This is the api docs of deliciouSpeak auth service
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: deliciouSpeak API
+  version: 1.0.0
+tags:
+- description: auth operations
+  name: auth
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/MAGLIANIM_1/deliciouspeak/1.0.0
+paths:
+  /auth/login:
+    post:
+      description: |
+        After receiving username and password, the system checks the validity and behaves depending on
+        the authentication type configured during the signup process.
+        - correct credentials with single factor login: an auth jwt token is issued
+        - correct credentials with two factor login: an OTP is sent to the provided user email address
+        - incorrect credentials: unauthorized response is provided regardless of the type of authentication
+      operationId: auth_login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginPayload'
+        description: Login credentials
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/authLogin_200_response'
+          description: search results matching criteria
+        "401":
+          description: Two-factor is not enabled and credentials are wrong
+      summary: Logs a user inside the system
+      tags:
+      - auth
+      x-openapi-router-controller: api.controllers.auth_controller
+  /auth/login2fa:
+    post:
+      description: |
+        The system check if the otp (previously sent to user-provided email) is valid
+      operationId: auth_login2fa_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login2faPayload'
+        description: two factord Login credentials
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginSuccessResp'
+          description: user successfully logged with two-factor login
+        "401":
+          description: wrong or invalid credentials
+      summary: performs two factor login
+      tags:
+      - auth
+      x-openapi-router-controller: api.controllers.auth_controller
+  /auth/register:
+    post:
+      description: Validates and adds a new user as a result of a registration process
+      operationId: user_register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUserPayload'
+      responses:
+        "201":
+          description: user created
+        "400":
+          description: invalid user data
+        "409":
+          description: user already exists
+      summary: Register a new user inside the system
+      tags:
+      - auth
+      x-openapi-router-controller: api.controllers.auth_controller
+  /auth/private:
+    get:
+      summary: Gets a private info accessible only if user is logged in
+      operationId: auth_private
+      responses:
+        '200':
+          description: secret response
+          content:
+            'text/plain':
+              schema:
+                type: string
+      security:
+      - jwt: ['secret']  
+      tags:
+      - auth
+      x-openapi-router-controller: api.controllers.auth_controller
+  /auth/echo:
+    get:
+      summary: Repeats a given input message
+      operationId: auth_echo
+      parameters:
+        - name: input_message
+          in: query
+          description: the message to be repeated
+          schema:
+            type: string
+      responses:
+        '200':
+          description: echo response
+          content:
+            'text/plain':
+              schema:
+                type: string
+      tags:
+      - auth
+      x-openapi-router-controller: api.controllers.auth_controller      
+components:
+  schemas:
+    RegisterUserPayload:
+      example:
+        favouriteDish: Pizza
+        firstName: John
+        lastName: Smith
+        emailAddress: john.smith@delicious.com
+        password: test
+        birthDate: 1977-01-21T00:00:00.000+00:00
+        enableTwoFactor: true
+      properties:
+        firstName:
+          description: The first name of the user
+          example: John
+          title: firstName
+          type: string
+        lastName:
+          description: The last name of the user
+          example: Smith
+          title: lastName
+          type: string
+        favouriteDish:
+          description: The favourite dish of the user.
+          example: Pizza
+          title: favouriteDish
+          type: string
+        birthDate:
+          description: The date of birth of the user.
+          example: 1977-01-21
+          format: date
+          title: birthDate
+          type: string
+        emailAddress:
+          description: "The email of the user. Note, this will be also the username"
+          example: john.smith@delicious.com
+          format: email
+          title: emailAddress
+          type: string
+        password:
+          description: The password chosen by the user
+          example: test
+          title: password
+          type: string
+        enableTwoFactor:
+          description: Tells the system if two-factor authentication is enabled for
+            the users
+          example: true
+          title: enableTwoFactor
+          type: boolean
+      required:
+      - birthDate
+      - emailAddress
+      - enableTwoFactor
+      - favouriteDish
+      - firstName
+      - lastName
+      - password
+      title: RegisterUserPayload
+      type: object
+    LoginPayload:
+      description: Request payload for the auth/login operation
+      example:
+        password: very-strong-password
+        username: john.smith@delicious.com
+      properties:
+        username:
+          example: john.smith@delicious.com
+          title: username
+          type: string
+        password:
+          example: very-strong-password
+          title: password
+          type: string
+      required:
+      - password
+      - username
+      title: LoginPayload
+      type: object
+    LoginSuccessResp:
+      description: success login response body
+      example:
+        token: eyJhbGciOiJIUzI1.NiIsInR5cCI6IkpXVCJ9
+      properties:
+        token:
+          example: eyJhbGciOiJIUzI1.NiIsInR5cCI6IkpXVCJ9
+          title: token
+          type: string
+      required:
+      - token
+      title: LoginSuccessResp
+      type: object
+    LoginSuccess2faResp:
+      description: success response body of auth/login when two-factor auth is enabled
+      properties:
+        message:
+          example: "single-factor login correct, otp code sent"
+          title: message
+          type: string
+      required:
+      - message
+      title: LoginSuccess2faResp
+      type: object
+    Login2faPayload:
+      description: request payload for two-factor login process
+      example:
+        otp: 13456
+        username: john.smith@delicious.com
+      properties:
+        username:
+          example: john.smith@delicious.com
+          title: username
+          type: string
+        otp:
+          description: one time password value
+          example: abcdefg
+          title: otp
+          type: string
+      required:
+      - username
+      - otp
+      title: Login2faPayload
+      type: object
+    authLogin_200_response:
+      oneOf:
+      - $ref: '#/components/schemas/LoginSuccessResp'
+      - $ref: '#/components/schemas/LoginSuccess2faResp'
+      title: authLogin_200_response
+  securitySchemes:
+    jwt:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-bearerInfoFunc: api.main.decode_token

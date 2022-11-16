@@ -18,7 +18,7 @@ https://realpython.com/flask-blueprint/#how-flask-blueprints-work
 
 - secure app with jwt
 https://geekflare.com/securing-flask-api-with-jwt/
-
+https://github.com/spec-first/connexion/blob/main/examples/openapi3/jwt/app.py
 
 -- note - todo
 - versionare le api
@@ -33,3 +33,16 @@ https://geekflare.com/securing-flask-api-with-jwt/
 
 https://www.section.io/engineering-education/implementing-totp-2fa-using-flask/
 
+
+
+styleguide
+
+https://google.github.io/styleguide/pyguide.html#3164-guidelines-derived-from-guidos-recommendations
+
+
+--per lanciare:
+
+il progetto
+python ./api/main.py
+i test
+python -m unittest discover ./api/test/
