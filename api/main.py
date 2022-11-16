@@ -30,7 +30,7 @@ def main():
         Main entry point of the api
     """
     app = create_app()
-    app.run(port=5000, debug=True)
+    app.run(port=5000, debug=False)
 
 if __name__ == '__main__':
     main()
