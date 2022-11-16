@@ -38,3 +38,11 @@ https://www.section.io/engineering-education/implementing-totp-2fa-using-flask/
 styleguide
 
 https://google.github.io/styleguide/pyguide.html#3164-guidelines-derived-from-guidos-recommendations
+
+
+--per lanciare:
+
+il progetto
+python ./api/main.py
+i test
+python -m unittest discover ./api/test/

@@ -17,3 +17,6 @@ class DbService(object):
         returns a new db session
         """
         return self.Session()
+
+    def drop_all(self):
+        BaseEntity.metadata.drop_all(bind=self.engine)
