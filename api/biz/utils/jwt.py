@@ -8,12 +8,12 @@ JWT_LIFETIME_SECONDS = 300
 JWT_ALGORITHM = "HS256"
 
 
-def generate_token(user_id):
+def generate_token(user_id, lifetime_seconds = None):
     timestamp = _current_timestamp()
     payload = {
         "iss": JWT_ISSUER,
         "iat": int(timestamp),
-        "exp": int(timestamp + JWT_LIFETIME_SECONDS),
+        "exp": int(timestamp + (lifetime_seconds if lifetime_seconds else JWT_LIFETIME_SECONDS)),
         "sub": str(user_id),
     }
 

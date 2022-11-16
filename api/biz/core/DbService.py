@@ -18,5 +18,8 @@ class DbService(object):
         """
         return self.Session()
 
+    def create_all(self):
+        BaseEntity.metadata.create_all(bind=self.engine, checkfirst=True)
+
     def drop_all(self):
         BaseEntity.metadata.drop_all(bind=self.engine)

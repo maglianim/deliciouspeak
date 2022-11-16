@@ -46,11 +46,11 @@ class AuthService(BaseService):
 
             statement = select(Otp).filter_by(otp=otp)
             readed_otp = session.execute(statement).scalars().first()
-            if not isinstance(readed_otp, Otp) or readed_otp.user_name != user_name:
-                return None
             statement = delete(Otp).filter_by(otp=otp)
             session.execute(statement)
             session.commit()
+            if not isinstance(readed_otp, Otp) or readed_otp.user_name != user_name:
+                return None
             return jwt.generate_token(user_name)
         finally:
             session.close()
