@@ -333,3 +333,6 @@ ASALocalRun/
 .mfractor/
 
 *.DS_Store
+
+api/db/*.sqlite
+
