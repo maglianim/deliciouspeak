@@ -104,6 +104,26 @@ paths:
       tags:
       - auth
       x-openapi-router-controller: api.controllers.auth_controller
+  /auth/echo:
+    get:
+      summary: Repeats a given input message
+      operationId: auth_echo
+      parameters:
+        - name: input_message
+          in: query
+          description: the message to be repeated
+          schema:
+            type: string
+      responses:
+        '200':
+          description: echo response
+          content:
+            'text/plain':
+              schema:
+                type: string
+      tags:
+      - auth
+      x-openapi-router-controller: api.controllers.auth_controller      
 components:
   schemas:
     RegisterUserPayload:

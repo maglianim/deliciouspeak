@@ -15,6 +15,17 @@ from api.models.login_success_resp import LoginSuccessResp  # noqa: E501
 from api.models.login2fa_payload import Login2faPayload  # noqa: E501
 from api.models.register_user_payload import RegisterUserPayload  # noqa: E501
 
+def auth_echo(input_message=None):  # noqa: E501
+    """Gets a private info accessible only if user is logged in
+
+     # noqa: E501
+
+    :param input_message: the message to be repeated
+    :type input_message: str
+
+    :rtype: Union[str, Tuple[str, int], Tuple[str, int, Dict[str, str]]
+    """
+    return input_message
 
 def auth_login(login_payload=None):  # noqa: E501
     """Logs a user inside the system
