@@ -12,10 +12,9 @@ def decode_token(token):
     """
     return jwt.decode_token(token)
 
-
-def main():
+def create_app():
     """
-        Main entry point of the api
+    App factory
     """
     app = connexion.FlaskApp(__name__, specification_dir='./openapi/')
     app.app.json_encoder = encoder.JSONEncoder
@@ -23,8 +22,14 @@ def main():
                 arguments={'title': 'deliciouSpeak API'},
                 base_path='/api',
                 pythonic_params=True)
+    return app
 
-    # DbService()
+
+def main():
+    """
+        Main entry point of the api
+    """
+    app = create_app()
     app.run(port=5000, debug=True)
 
 if __name__ == '__main__':
