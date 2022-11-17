@@ -7,7 +7,17 @@ This is a demonstrative app that enables a user to register and perform a login 
 
 The api has been developed with a document-first approach. you can find [here](./api/openapi/deliciouspeak.yaml) the api specifications reference.
 
-Internally it uses sqlite to store user credentials; The db is automatically created and configured.
+You can also check out the documentation on [swagger](https://app.swaggerhub.com/apis/MAGLIANIM_1/deliciouspeak/1.0.0#/).
+
+## Authentication flow
+
+### Single factor authentication
+![One factor flow](./docs/images/sequence-one-factor.png)
+
+### Two factor authentication
+![Two factor flow](./docs/images/sequence-two-factor.png)
+
+This project internally it uses sqlite to store user credentials; The db is automatically created and configured.
 
 
 ## Setup

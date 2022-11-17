@@ -30,6 +30,7 @@ def main():
         Main entry point of the api
     """
     app = create_app()
+    # FIXME this is a demo project - debug to be removed in a production environment
     app.run(port=5000, debug=True)
 
 if __name__ == '__main__':
