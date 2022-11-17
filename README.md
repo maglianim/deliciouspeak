@@ -12,10 +12,10 @@ You can also check out the documentation on [swagger](https://app.swaggerhub.com
 ## Authentication flow
 
 ### Single factor authentication
-![One factor flow](./docs/images/sequence-one-factor.png)
+![One factor flow](https://github.com/maglianim/deliciouspeak/blob/master/docs/images/sequence-one-factor.png)
 
 ### Two factor authentication
-![Two factor flow](./docs/images/sequence-two-factor.png)
+![Two factor flow](https://github.com/maglianim/deliciouspeak/blob/master/docs/images/sequence-two-factor.png)
 
 This project internally it uses sqlite to store user credentials; The db is automatically created and configured.
 
